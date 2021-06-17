@@ -13,23 +13,22 @@ class pmsl(commands.Cog):
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def pmsla(self, ctx, user: discord.Member, *, arg1):
-
-        emoteslist = ["<a:yessad:738983674242007140> ",
-                      "<a:verify:742940239403941930> ",
-                      "<a:verifykr:763258119169900574> ",
-                      "<:ATD_vortexScam:801698916373495819> ",
-                      "<a:tik:746576569652346890> ",
-                      "<a:emoji_7:790546540217237514> ",
-                      "<a:safetik:781344436872675339> ",
-                      "<a:brxpurple:836960052358676480>",
-                      "<a:op16:789552412260171777> ",
-                      "<a:yhh:743698122362060810> " ]
-        random_emote = random.choice(emoteslist)
+        opemotes = ["<a:yessad:738983674242007140> ",
+                    "<a:verify:742940239403941930> ",
+                    "<a:verifykr:763258119169900574> ",
+                    "<:ATD_vortexScam:801698916373495819> ",
+                   "<a:tik:746576569652346890> ",
+                   "<a:emoji_7:790546540217237514> ",
+                   "<a:safetik:781344436872675339> ",
+                   "<a:brxpurple:836960052358676480>",
+                   "<a:op16:789552412260171777> ",
+                   "<a:yhh:743698122362060810> " ]
+        random_emote = random.choice(opemotes)
         pmslrole = ctx.guild.get_role(variables.pmsl_confirmrole)
         channel = ctx.guild.get_channel(variables.pmsl_logs)
         embed = discord.Embed(title=' PMSL Team Confirmation', colour=0x00ff00)
         embed.add_field(name=f'Team - **{arg1}**',
-                        value=f'PMSL *Accepted* {random_emote} \n{user.mention}',
+                        value=f'PMSL `Accepted` {random_emote} \n{user.mention}',
                         inline=False)
         embed.set_footer(
             text='Copyright ©  2021 REAL Esports- All Rights Reserved.')
@@ -40,11 +39,15 @@ class pmsl(commands.Cog):
             await ctx.send(f'Team {arg1} accepted in PMSL <a:verifykr:763258119169900574> ')
         except:
             await ctx.send(f"Couldn't dm {user.mention} <a:warn:789554164731478108> ")
-        await user.add_roles(
+        try:
+          await user.add_roles(
             pmslrole,
             reason=f"pmsla command by {ctx.message.author.name}",
             atomic=True)
-        await ctx.send(f'Role added to {user.mention} <a:whitemusic:789550966776528977> ')
+        except:
+          await ctx.send("Couldn't add role to user")
+        else:
+          await ctx.send(f'Role added to {user.mention} <a:whitemusic:789550966776528977> ')
 
     @commands.command(
         aliases=['pmslreject'], )

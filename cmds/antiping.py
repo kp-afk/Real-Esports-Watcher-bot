@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import pymongo
 from pymongo import MongoClient
 import variables
@@ -60,7 +60,7 @@ class antiping(commands.Cog):
                                           "time": datetime.now()
                                       }})
 
-                if not message.author.guild_permissions.view_audit_log:
+                if not message.author.guild_permissions.view_audit_log and message.author.id != 566189274991427594:
                     userdocument = collection.find_one(
                         {"_id": message.author.id})
                     infractions_count = userdocument.get("rajumentions")
@@ -86,6 +86,9 @@ class antiping(commands.Cog):
                             {"$set": {
                                 "rajumentions": score
                             }},
+                            {"$set": {
+                                          "time": datetime.now()
+                            }}
                         )
 
                         await message.author.remove_roles(muterole,
@@ -102,6 +105,21 @@ class antiping(commands.Cog):
         else:
             return
 
+    @tasks.loop(seconds=30.0)
+    async def raju(self):
+      for x in collection.find({},{ "_id": 0, "rajumentions": 0, "name": 0}):
+        y = x.get("time")
+        z = datetime.now() - timedelta(hours = 8)
+        if y < z:
+          myquery = { "time" : y }
+          opbolte = collection.find_one(myquery)
+          name = opbolte.get("name")
+          collection.delete_one(myquery)
+         
+          print(f"Document for {name} deleted (time over) ")
+        else:
+          pass
+      
 
 def setup(client):
     client.add_cog(antiping(client))

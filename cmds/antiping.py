@@ -20,7 +20,8 @@ class antiping(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-
+        guild = self.client.guilds[0]
+        content_creator_role = guild.get_role(706016926475747349)
         raju = self.client.get_user(788868444325543977)
         chiripto = self.client.get_user(511965562457423902)
 
@@ -36,7 +37,7 @@ class antiping(commands.Cog):
                     "time": datetime.now()
                 }
                 collection.insert_one(post)
-                if not message.author.guild_permissions.view_audit_log:
+                if not message.author.guild_permissions.view_audit_log and content_creator_role not in message.author.roles:
                     await message.reply(
                         "Don't mention the server owner again! \nWait for response from <@&746822303584878672> ",
                         mention_author=False)
@@ -60,7 +61,7 @@ class antiping(commands.Cog):
                                           "time": datetime.now()
                                       }})
 
-                if not message.author.guild_permissions.view_audit_log and message.author.id != 566189274991427594:
+                if not message.author.guild_permissions.view_audit_log and content_creator_role not in message.author.roles:
                     userdocument = collection.find_one(
                         {"_id": message.author.id})
                     infractions_count = userdocument.get("rajumentions")
@@ -85,11 +86,9 @@ class antiping(commands.Cog):
                             {"_id": message.author.id},
                             {"$set": {
                                 "rajumentions": score
-                            }},
-                            {"$set": {
-                                          "time": datetime.now()
-                            }}
-                        )
+                            }}, {"$set": {
+                                "time": datetime.now()
+                            }})
 
                         await message.author.remove_roles(muterole,
                                                           reason="Time over!",
@@ -105,21 +104,25 @@ class antiping(commands.Cog):
         else:
             return
 
-    @tasks.loop(seconds=30.0)
-    async def raju(self):
-      for x in collection.find({},{ "_id": 0, "rajumentions": 0, "name": 0}):
-        y = x.get("time")
-        z = datetime.now() - timedelta(hours = 8)
-        if y < z:
-          myquery = { "time" : y }
-          opbolte = collection.find_one(myquery)
-          name = opbolte.get("name")
-          collection.delete_one(myquery)
-         
-          print(f"Document for {name} deleted (time over) ")
-        else:
-          pass
-      
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def raju(self, ctx):
+        for x in collection.find({}, {"_id": 0, "rajumentions": 0, "name": 0}):
+            y = x.get("time")
+            z = datetime.now() - timedelta(hours=8)
+            if y < z:
+                myquery = {"time": y}
+                opbolte = collection.find_one(myquery)
+                name = opbolte.get("name")
+                collection.delete_one(myquery)
+                print(f"Document for {name} deleted (time over)")
+                await ctx.send(
+                    f"Infraction deleted for {name} <a:yessad:738983674242007140> "
+                )
+            else:
+                pass
+
 
 def setup(client):
     client.add_cog(antiping(client))

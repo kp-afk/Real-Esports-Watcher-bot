@@ -80,6 +80,14 @@ version = "1.0.1"
 
 [[package]]
 category = "main"
+description = "A simple module to use for buttons in discord.py"
+name = "discord-buttons-plugin"
+optional = false
+python-versions = ">=3.6"
+version = "0.1.2"
+
+[[package]]
+category = "main"
 description = "A Python wrapper for the Discord API"
 name = "discord.py"
 optional = false
@@ -241,7 +249,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "ad680a5a5ed1c9745c3b8c312b3c7fb2bcf7d94d98b16b67b32915b33b880781"
+content-hash = "2f612c198abfef6a5d6b2662fbb25f9a0b95b669793d661bcc9b5a59edff6705"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -307,6 +315,10 @@ colorama = [
 discord = [
     {file = "discord-1.0.1-py3-none-any.whl", hash = "sha256:9d4debb4a37845543bd4b92cb195bc53a302797333e768e70344222857ff1559"},
     {file = "discord-1.0.1.tar.gz", hash = "sha256:ff6653655e342e7721dfb3f10421345fd852c2a33f2cca912b1c39b3778a9429"},
+]
+discord-buttons-plugin = [
+    {file = "discord_buttons_plugin-0.1.2-py3-none-any.whl", hash = "sha256:877327541b321d93707a1f9fa7b086fee19a06193ff523deb406c52ee2d53f24"},
+    {file = "discord_buttons_plugin-0.1.2.tar.gz", hash = "sha256:a0957bb4e151fdf59158b6bca65ba6238b9cb3e9f5b1e046c793d772e86eca04"},
 ]
 "discord.py" = [
     {file = "discord.py-1.7.3-py3-none-any.whl", hash = "sha256:c6f64db136de0e18e090f6752ea68bdd4ab0a61b82dfe7acecefa22d6477bb0c"},

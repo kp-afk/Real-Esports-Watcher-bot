@@ -20,13 +20,14 @@ class antiping(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        i = discord.AllowedMentions(everyone = False, users=False, roles=False)
         guild = self.client.guilds[0]
         content_creator_role = guild.get_role(706016926475747349)
         raju = self.client.get_user(788868444325543977)
         chiripto = self.client.get_user(511965562457423902)
-
+        rajoo = self.client.get_user(550948377148522498)
         if raju.mentioned_in(message) or chiripto.mentioned_in(
-                message) and message.author.bot == False:
+                message) or rajoo.mentioned_in(message) and not message.author.bot:
 
             myquery = {"_id": message.author.id}
             if (collection.count_documents(myquery) == 0):
@@ -38,9 +39,9 @@ class antiping(commands.Cog):
                 }
                 collection.insert_one(post)
                 if not message.author.guild_permissions.view_audit_log and content_creator_role not in message.author.roles:
-                    await message.reply(
+                    await message.reply(content=
                         "Don't mention the server owner again! \nWait for response from <@&746822303584878672> ",
-                        mention_author=False)
+                        mention_author=False, allowed_mentions=i)
                 else:
                     return
 
@@ -95,9 +96,9 @@ class antiping(commands.Cog):
                                                           atomic=True)
 
                     else:
-                        await message.reply(
+                        await message.reply(content=
                             "Don't mention the server owner again! \nWait for response from <@&746822303584878672> ",
-                            mention_author=False)
+                            mention_author=False, allowed_mentions=i)
 
                 else:
                     return
@@ -122,7 +123,28 @@ class antiping(commands.Cog):
                 )
             else:
                 pass
-
+"""
+    @commands.Cog.listener()
+    async def on_message(self, message):
+      collection = db["msgcount"]
+      x = {"_id": message.channel.id}
+      if (collection.count_documents(x) == 0):
+        msgs = {
+                    "_id": message.channel.id,
+                    "msgcount": 1,
+                    "channel_name" : message.channel.name
+              }
+        collection.insert_one(msgs)
+      else:
+        y = collection.find(x)
+        for result in y:
+          count = result["msgcount"]
+        count = count + 1
+        collection.update_one(
+        {"_id": message.channel.id},
+        {"$set": {"msgcount": count}}
+        )
+""" 
 
 def setup(client):
     client.add_cog(antiping(client))

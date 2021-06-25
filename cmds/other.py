@@ -20,11 +20,6 @@ class other(commands.Cog):
         helpembed = discord.Embed(title="Watcher Bot Command Categories:",
                                   color=0xff0000)
         helpembed.add_field(
-            name="Moderation",
-            value=
-            f"ban `<user>` `<optional_reason>` \n unban `<user>` `<optional_reason>` \n kick `<user>` `<optional_reason>`",
-            inline=False)
-        helpembed.add_field(
             name="T3",
             value=
             f"addprime `<user>` `<team_name>` `<timings>` `<expire_date>` \n removeprime `<user>`",
@@ -44,17 +39,42 @@ class other(commands.Cog):
                             inline=False)
         await ctx.send(embed=helpembed)
 
+
     @commands.command()
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def dm(self, ctx, user: discord.User, *, arg1):
+        i = discord.AllowedMentions(everyone = False, users=False)
         try:
             await user.create_dm()
             await user.dm_channel.send(arg1)
         except:
-            await ctx.send(f"Couldn't dm {user.mention}")
+            await ctx.send(content=f"Couldn't dm {user.mention}", allowed_mentions=i)
         else:
             await ctx.send('DMd user successfully')
+        
+    @commands.command(description="Used to add Roles to a large number of users.")
+    @commands.has_guild_permissions(ban_members=True)
+    async def massrole(self, ctx, role : discord.Role, *argv : discord.Member):
+        i = discord.AllowedMentions(everyone = False, users=False)
+        for arg in argv:
+          try:
+            await arg.add_roles(role, reason=f"Massrole command by {ctx.message.author.name}", atomic=True)
+            await ctx.send(content=f"Role added to {arg.mention}", allowed_mentions=i)
+          except:
+            await ctx.send(content=f"Couldn't add role to {arg.mention}", allowed_mentions=i)
+
+    @commands.command()
+    async def reju(self, ctx):
+      
+      await ctx.send(content=f"U r Noob {ctx.message.author.mention}", allowed_mentions = allowed_mentions) 
+    
+
+      
+
+
+
+
 
 
 def setup(client):

@@ -11,7 +11,7 @@ class error_handling(commands.Cog):
         elif isinstance(error, commands.CommandNotFound):
             await ctx.send('Command does not exist.')
         elif isinstance(error, commands.MissingPermissions):
-            await ctx.send("You Don't have the correct Permission")
+            pass #await ctx.send("You Don't have the correct Permission")
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please enter all required Arguments")
         elif isinstance(error, commands.TooManyArguments):

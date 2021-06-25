@@ -13,6 +13,7 @@ class pmsl(commands.Cog):
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def pmsla(self, ctx, user: discord.Member, *, arg1):
+        i = discord.AllowedMentions(everyone = False, users=False)
         opemotes = ["<a:yessad:738983674242007140> ",
                     "<a:verify:742940239403941930> ",
                     "<a:verifykr:763258119169900574> ",
@@ -38,7 +39,7 @@ class pmsl(commands.Cog):
             await user.dm_channel.send(embed=embed)
             await ctx.send(f'Team {arg1} accepted in PMSL <a:verifykr:763258119169900574> ')
         except:
-            await ctx.send(f"Couldn't dm {user.mention} <a:warn:789554164731478108> ")
+            await ctx.send(content=f"Couldn't dm {user.mention} <a:warn:789554164731478108> ", allowed_mentions=i)
         try:
           await user.add_roles(
             pmslrole,
@@ -47,7 +48,7 @@ class pmsl(commands.Cog):
         except:
           await ctx.send("Couldn't add role to user")
         else:
-          await ctx.send(f'Role added to {user.mention} <a:whitemusic:789550966776528977> ')
+          await ctx.send(content=f'Role added to {user.mention} <a:whitemusic:789550966776528977> ', allowed_mentions=i)
 
     @commands.command(
         aliases=['pmslreject'], )

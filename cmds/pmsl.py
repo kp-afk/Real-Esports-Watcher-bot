@@ -2,17 +2,31 @@ import discord
 from discord.ext import commands
 import variables
 import random
+import os
+import pymongo
+from pymongo import MongoClient
+from cmds import utils
+
+
+mongodb_credentials = os.getenv('mongodb')
+cluster = MongoClient(mongodb_credentials)
+db = cluster["Real_Esports_Bot"]
+collection = db["countr"]
 
 
 class pmsl(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(
-        aliases=['pmslyes', 'pmslaccept', 'apmsl'], )
+    @commands.command(aliases=['pmslyes', 'pmslaccept', 'apmsl'], )
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def pmsla(self, ctx, user: discord.Member, *, arg1):
+        op = await utils.update_confirm_teams(ctx, user, *arg1)
+        random_embed_colours = utils.randomc()
+        confirmchannel = ctx.guild.get_channel(827380866031419472)
+  
+        await confirmchannel.send(f"{op}. {arg1} - {user.mention}")
         i = discord.AllowedMentions(everyone = False, users=False)
         opemotes = ["<a:yessad:738983674242007140> ",
                     "<a:verify:742940239403941930> ",
@@ -27,9 +41,9 @@ class pmsl(commands.Cog):
         random_emote = random.choice(opemotes)
         pmslrole = ctx.guild.get_role(variables.pmsl_confirmrole)
         channel = ctx.guild.get_channel(variables.pmsl_logs)
-        embed = discord.Embed(title=' PMSL Team Confirmation', colour=0x00ff00)
+        embed = discord.Embed(title=' PMSL Team Confirmation', colour=random_embed_colours)
         embed.add_field(name=f'Team - **{arg1}**',
-                        value=f'PMSL `Accepted` {random_emote} \n{user.mention}',
+                        value=f'PMSL `Confirmed` {random_emote} \n{user.mention}',
                         inline=False)
         embed.set_footer(
             text='Copyright ©  2021 REAL Esports- All Rights Reserved.')
@@ -109,6 +123,7 @@ class pmsl(commands.Cog):
             await ctx.send(f"Couldn't dm {user.mention}")
         else:
             await ctx.send(f'Alert sent to {user.mention}')
+      
 
 
 def setup(client):

@@ -15,7 +15,7 @@ class other(commands.Cog):
     @commands.command()
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
-    async def help(self, ctx):
+    async def x(self, ctx):
 
         helpembed = discord.Embed(title="Watcher Bot Command Categories:",
                                   color=0xff0000)
@@ -65,9 +65,12 @@ class other(commands.Cog):
             await ctx.send(content=f"Couldn't add role to {arg.mention}", allowed_mentions=i)
 
     @commands.command()
-    async def reju(self, ctx):
-      
-      await ctx.send(content=f"U r Noob {ctx.message.author.mention}", allowed_mentions = allowed_mentions) 
+    async def say(self, ctx, *, arg1):
+      i = discord.AllowedMentions(everyone = False, users=False, roles=False)
+      await ctx.send(content=arg1, allowed_mentions=i)
+
+
+ 
     
 
       

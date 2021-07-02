@@ -11,7 +11,7 @@ class error_handling(commands.Cog):
         elif isinstance(error, commands.CommandNotFound):
             await ctx.send('Command does not exist.')
         elif isinstance(error, commands.MissingPermissions):
-            pass #await ctx.send("You Don't have the correct Permission")
+            await ctx.send("You Don't have the correct Permission")
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please enter all required Arguments")
         elif isinstance(error, commands.TooManyArguments):
@@ -27,6 +27,7 @@ class error_handling(commands.Cog):
 
         else:
             await ctx.send("Error Executing command")
+        
 
 def setup(client):
     client.add_cog(error_handling(client))

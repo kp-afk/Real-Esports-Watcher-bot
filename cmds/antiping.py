@@ -118,33 +118,11 @@ class antiping(commands.Cog):
                 name = opbolte.get("name")
                 collection.delete_one(myquery)
                 print(f"Document for {name} deleted (time over)")
-                await ctx.send(
-                    f"Infraction deleted for {name} <a:yessad:738983674242007140> "
-                )
+
             else:
                 pass
-"""
-    @commands.Cog.listener()
-    async def on_message(self, message):
-      collection = db["msgcount"]
-      x = {"_id": message.channel.id}
-      if (collection.count_documents(x) == 0):
-        msgs = {
-                    "_id": message.channel.id,
-                    "msgcount": 1,
-                    "channel_name" : message.channel.name
-              }
-        collection.insert_one(msgs)
-      else:
-        y = collection.find(x)
-        for result in y:
-          count = result["msgcount"]
-        count = count + 1
-        collection.update_one(
-        {"_id": message.channel.id},
-        {"$set": {"msgcount": count}}
-        )
-""" 
+        await ctx.send("reju")
+        
 
 def setup(client):
     client.add_cog(antiping(client))

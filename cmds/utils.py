@@ -11,6 +11,7 @@ cluster = MongoClient(mongodb_credentials)
 db = cluster["Real_Esports_Bot"]
 collection = db["countr"]
 
+# Returns a colour with a set chance 
 def randomc():
       chance = random.randint(0, 100) 
       if chance <= 10:
@@ -32,6 +33,7 @@ def randomc():
         randomcolour = 0x00FF00 #green
         return randomcolour
 
+# send team names with user to the channel
 async def update_confirm_teams(ctx, user, *arg1):
   query = {"_id" : "teamcounter"}
   doc = collection.find(query)
@@ -40,3 +42,20 @@ async def update_confirm_teams(ctx, user, *arg1):
   score = score + 1
   collection.update_one({"_id": "teamcounter"},{"$set": {"counter": score}},)
   return score
+
+# returns random emote
+def randomemote():
+  opemotes = ["<a:yessad:738983674242007140> ",
+              "<a:verify:742940239403941930> ",
+              "<a:verifykr:763258119169900574> ",
+              "<:ATD_vortexScam:801698916373495819> ",
+              "<a:tik:746576569652346890> ",
+              "<a:emoji_7:790546540217237514> ",
+              "<a:safetik:781344436872675339> ",
+              "<a:brxpurple:836960052358676480>",
+              "<a:op16:789552412260171777> ",
+              "<a:yhh:743698122362060810> " ]
+  random_emote = random.choice(opemotes)
+  return random_emote
+
+  

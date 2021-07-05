@@ -7,6 +7,7 @@ class t3watch(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    # Add Prime 
     @commands.command(aliases=['addp', 'add'])
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)

@@ -66,7 +66,7 @@ class antiping(commands.Cog):
                     userdocument = collection.find_one(
                         {"_id": message.author.id})
                     infractions_count = userdocument.get("rajumentions")
-                    if infractions_count >= 3:
+                    if infractions_count >= 5:
                         guild = self.client.guilds[0]
                         muterole = guild.get_role(variables.muterole)
                         await message.author.add_roles(

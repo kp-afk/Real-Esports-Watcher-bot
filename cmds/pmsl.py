@@ -22,23 +22,17 @@ class pmsl(commands.Cog):
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def pmsla(self, ctx, user: discord.Member, *, arg1):
+        try:
+          await ctx.message.delete()
+        except:
+          pass
         op = await utils.update_confirm_teams(ctx, user, *arg1)
         random_embed_colours = utils.randomc()
         confirmchannel = ctx.guild.get_channel(827380866031419472)
   
         await confirmchannel.send(f"{op}. {arg1} - {user.mention}")
         i = discord.AllowedMentions(everyone = False, users=False)
-        opemotes = ["<a:yessad:738983674242007140> ",
-                    "<a:verify:742940239403941930> ",
-                    "<a:verifykr:763258119169900574> ",
-                    "<:ATD_vortexScam:801698916373495819> ",
-                   "<a:tik:746576569652346890> ",
-                   "<a:emoji_7:790546540217237514> ",
-                   "<a:safetik:781344436872675339> ",
-                   "<a:brxpurple:836960052358676480>",
-                   "<a:op16:789552412260171777> ",
-                   "<a:yhh:743698122362060810> " ]
-        random_emote = random.choice(opemotes)
+        random_emote = utils.randomemote()
         pmslrole = ctx.guild.get_role(variables.pmsl_confirmrole)
         channel = ctx.guild.get_channel(variables.pmsl_logs)
         embed = discord.Embed(title=' PMSL Team Confirmation', colour=random_embed_colours)

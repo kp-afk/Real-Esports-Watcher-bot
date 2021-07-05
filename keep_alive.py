@@ -6,7 +6,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return f"Raju Bhai OP"
+    return f"Am Alive Now"
 
 
 def run():

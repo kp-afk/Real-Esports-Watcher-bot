@@ -15,18 +15,15 @@ class error_handling(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please enter all required Arguments")
         elif isinstance(error, commands.TooManyArguments):
-            await ctx.send(
-                "Please Enter arguments properly, \n Too many arguments have been given."
-            )
+            await ctx.send("Please Enter arguments properly, \n Too many arguments have been given.")
         elif isinstance(error, commands.BotMissingPermissions):
             await ctx.send("Bot is missing permissions.")
         elif isinstance(error, commands.MissingRole):
             await ctx.send("Sorry, You can't use this command!")
         elif isinstance(error, commands.UserNotFound):
             await ctx.send("User not found")
-
-        else:
-            await ctx.send("Error Executing command")
+        elif isinstance(error, commands.MemberNotFound):
+          await ctx.send("Member not found")
         
 
 def setup(client):

@@ -1,3 +1,0 @@
-214. (<Member id=625279060699775003 name='kp' discriminator='8628' bot=False nick=None guild=<Guild id=565508242843631616 name='Real Esports' shard_id=None chunked=True member_count=7964>>, 'n', 'o', 'b', ' ', 'l', 'o', 'l')
-215. (<Member id=625279060699775003 name='kp' discriminator='8628' bot=False nick=None guild=<Guild id=565508242843631616 name='Real Esports' shard_id=None chunked=True member_count=7964>>, 'n', 'o', 'b')
-216. (<Member id=625279060699775003 name='kp' discriminator='8628' bot=False nick=None guild=<Guild id=565508242843631616 name='Real Esports' shard_id=None chunked=True member_count=7964>>, 'n', 'o', 'b')

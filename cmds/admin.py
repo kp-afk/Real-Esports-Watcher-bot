@@ -2,10 +2,39 @@ import discord
 from discord.ext import commands
 import variables
 import asyncio
+from discord.utils import get
+import requests
+import os
+import re
 
 class admin(commands.Cog):
     def __init__(self, client):
         self.client = client
+
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def listrolemembers(self, ctx, role : discord.Role):
+      xlist = []
+      for discord.Member in role.members:
+        userid = discord.Member.id
+        xstring = f"<@{userid}>"
+        xlist.append(xstring)
+      x = "\n".join(xlist)
+      await ctx.send(x)
+
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def say(self, ctx, channel : discord.TextChannel, *, msg ):
+      await channel.send(msg)
+      try:
+        await ctx.message.delete()
+      except:
+        pass
+
+
+
 
     # Dm command
     @commands.command()
@@ -20,18 +49,15 @@ class admin(commands.Cog):
         else:
             await ctx.reply('DMd user successfully')
 
-    """
-    @commands.command()
-    async def royal(self, ctx):
-      await ctx.reply('https://tenor.com/view/sex-gif-19580480')
-    """
+    
 
     # Massrole command
     @commands.command(description="Used to add a single role to a large number of users.")
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
-    async def massrole(self, ctx, role : discord.Role, members: commands.Greedy[discord.Member]):
+    async def massrole(self, ctx, arg1 , members: commands.Greedy[discord.Member]):
         i = discord.AllowedMentions(everyone = False, users=False)
+        role = discord.utils.get(ctx.guild.roles, name=arg1)
         for discord.Member in members:
           try:
             await discord.Member.add_roles(role, reason=f"Massrole command by {ctx.message.author.name}", atomic=True)
@@ -43,13 +69,38 @@ class admin(commands.Cog):
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def removerole(self, ctx, user : discord.Member, roles: commands.Greedy[discord.Role]):
-      await user.remove_roles(roles, atomic=True)
+      for discord.Role in roles:
+        await user.remove_roles(discord.Role, atomic=True)
       await ctx.reply("Removed!")
 
+   
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def addmentionrole(self, ctx, role , messageid):
+      role = discord.utils.get(ctx.guild.roles, name=role)
+      channel = ctx.message.channel
+      x = await channel.fetch_message(messageid)
+      mentions = x.mentions
+      for discord.Member in mentions:
+        try:
+          await discord.Member.add_roles(role, atomic = True)
+        except:
+          await ctx.send(f"Couldn't add role to {discord.Member.mention}")
+      y = len(mentions)
+      await x.reply(f"Added Role - {role.name} to {y} Mentioned Members! ")
+
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def find(self, ctx,*, arg1):
+      role = discord.utils.get(ctx.guild.roles, name=arg1)
+      await ctx.reply(f" {role.mention} \n{role.id}")
+      for discord.Member in role.members:
+        await ctx.send(f"{discord.Member.name}\n{discord.Member.id}")
+
+
     
-        
-
-
 
 def setup(client):
     client.add_cog(admin(client))

@@ -5,9 +5,9 @@ tier_2_role_id = 790205207057006592
 #id of tier 2 logs channel
 tier_2_logs_channel_id = 843076325165629480
 #id of role allowed to use commands
-botaccess1 = 847690517286092800
+botaccess1 = 831739661386121256 #@❯❯❯───────FOUNDER OF REAL
 #id of role allowed to use commands
-botaccess2 = 705963939573530666
+botaccess2 = 847690517286092800 #@PMSL Management
 #id of role allowed to use commands
 botaccess3 = 841669677343703052
 #id of role allowed to use commands

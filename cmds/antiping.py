@@ -20,7 +20,6 @@ class antiping(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        i = discord.AllowedMentions(everyone = False, users=False, roles=False)
         guild = self.client.guilds[0]
         content_creator_role = guild.get_role(706016926475747349)
         raju = self.client.get_user(788868444325543977)
@@ -41,7 +40,7 @@ class antiping(commands.Cog):
                 if not message.author.guild_permissions.view_audit_log and content_creator_role not in message.author.roles:
                     await message.reply(content=
                         "Don't mention the server owner again! \nWait for response from <@&746822303584878672> ",
-                        mention_author=False, allowed_mentions=i)
+                        mention_author=False)
                 else:
                     return
 
@@ -98,17 +97,15 @@ class antiping(commands.Cog):
                     else:
                         await message.reply(content=
                             "Don't mention the server owner again! \nWait for response from <@&746822303584878672> ",
-                            mention_author=False, allowed_mentions=i)
+                            mention_author=False)
 
                 else:
                     return
         else:
             return
 
-    @commands.command()
-    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
-                           variables.botaccess3, variables.botaccess4)
-    async def raju(self, ctx):
+    @tasks.loop(seconds=2)
+    async def autodeleter():
         for x in collection.find({}, {"_id": 0, "rajumentions": 0, "name": 0}):
             y = x.get("time")
             z = datetime.now() - timedelta(hours=8)
@@ -121,7 +118,7 @@ class antiping(commands.Cog):
 
             else:
                 pass
-        await ctx.send("reju")
+    autodeleter.start()
         
 
 def setup(client):

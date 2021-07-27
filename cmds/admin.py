@@ -12,6 +12,13 @@ class admin(commands.Cog):
         self.client = client
 
     @commands.command()
+    async def rajjo(self, ctx):
+      for member in ctx.guild.members:
+        x = member.name
+        if "!" in member.name:
+          print(member.id)
+        
+    @commands.command()
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
     async def listrolemembers(self, ctx, role : discord.Role):

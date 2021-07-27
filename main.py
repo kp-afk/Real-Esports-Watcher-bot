@@ -15,13 +15,10 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online,
                                 activity=discord.Activity(
                                 type=discord.ActivityType.watching,
-                                name="Real Esports Summer League"))
+                                name="Tier 2"))
     print('Started')
-    channel = client.get_channel(827849966000144424)
-    guild = client.get_guild(565508242843631616)
-    await channel.connect()
-    await guild.change_voice_state(channel=channel, self_deaf=True, self_mute=False)
 
+      
 client.load_extension('cmds.tier_2_watch')
 client.load_extension('cmds.tier_3_watch')
 client.load_extension('cmds.pmsl')

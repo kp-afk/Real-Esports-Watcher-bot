@@ -3,21 +3,32 @@ from discord.ext import commands
 import variables
 import asyncio
 from discord.utils import get
-import requests
+
 import os
 import re
+from cmds import utils
 
 class admin(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command()
-    async def rajjo(self, ctx):
-      for member in ctx.guild.members:
-        x = member.name
-        if "!" in member.name:
-          print(member.id)
-        
+    async def convert(self, ctx, *, member):
+      try:
+        member = int(member)
+        member = ctx.guild.get_member(member)
+      except:
+        member = str(member)
+        member = ctx.guild.get_member_named(member)
+      await ctx.reply(member.mention)
+ 
+    @commands.command()
+    async def nobemail(self, ctx, arg1):
+      utils.mailer(arg1)
+ 
+
+
+
     @commands.command()
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)
@@ -80,7 +91,7 @@ class admin(commands.Cog):
         await user.remove_roles(discord.Role, atomic=True)
       await ctx.reply("Removed!")
 
-   
+
     @commands.command()
     @commands.has_any_role(variables.botaccess1, variables.botaccess2,
                            variables.botaccess3, variables.botaccess4)

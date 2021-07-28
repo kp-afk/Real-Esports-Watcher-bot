@@ -34,9 +34,9 @@ class other(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
       y = message.content.replace(" ", "")
-      x = y.casefold()
-      allowedchannelids = [827290385037524992, 857501729213120531]#tournament support, scrims support
-      if not message.channel.id in allowedchannelids:
+      x = y.casefold() 
+      channelids = [827290385037524992, 857501729213120531, 829663937179418624]
+      if not message.channel.id in channelids:
         return
       if "t2wait" in x:
         embedVar = discord.Embed(title="Tier 2 Normal Waiting time", description="**Real Esports** always welcome you in Tier 2 Normally waiting time is   **2 Day** but at present time **20 of teams are in Queue** so it may take at least **1 or 2 weeks.** When we reach to Your team we will contact you ourselves. You will get a **DM** on behalf of tier 2 the bot of Real Esports will be alert you in your dm \nOtherwise you can contact to [Admin](https://discord.com/channels/565508242843631616/842458727416332308/848775392331956244)", color=0x00ff00)
@@ -58,11 +58,6 @@ class other(commands.Cog):
         embedVar5 = discord.Embed(title="Tier 2 Requirement"  , description= "**1.** REAL ESPORTS OFFICIAL TOURNAMENT SEMIFINALIST'S.\n**2.** OFFICIAL TOURNAMENT QUALIFIED \n**3.** SEMI FINALIST OF UNOFFICIAL TOURNAMENT WITH 15K+ PRIZEPOOL AND FINALIST OF 8K+ PRIZEPOOL \n**4.** PMCO TOP 100 (AFTER QUALIFIERS END) \n**5.** PMIT  SEMIFINALIST'S \n**6.** PMCO TOP 30 \n**7.** PLAYING T2 OF REPUTED ESPORTS LIST HERE <#827306000112680960>", color=0x00ff00)
         await message.channel.send(embed=embedVar5)
     
-    @commands.Cog.listener()
-    async def on_message(self, message):
-      
-      y = message.content.replace(" ", "")
-      x = y.casefold()
       if "t2time" in x and message.channel.id == 829663937179418624:
         
         embed=discord.Embed(title="Real Esports tier 2 time here", description="With a board meeting we decide tier 2 new time. bcz Tier 2 is off due to some busy events, After a long time period real esports starting again the tier 2 which is happening in BGMI. \n `Note` - Tier 2 happening only on : Monday to Saturday \n You can see new timeline -  ", color=0x01c2e4)
@@ -101,7 +96,29 @@ class other(commands.Cog):
         except:
           await message.reply(f"I couldn't dm you! \nMake sure you dms are open.")
 
-         
+      if "t1rules" in x and message.channel.id == 857501729213120531:
+        embed=discord.Embed(title="These are New tier 1 guidelines for admission, **Read all rules carefully.**", description="1. All 4 Team members must have the same prefix in their In game name\n 2. All 4 Team member's Game IDs must be above level 25\n 3. All 4 Team members must have same In-game avatar.\n 4. Atleast one team member must stream their T1 Match gameplay on youtube\n 5. You need to send your achievements when asked for, but if your achievements are not valid for t1 or we get fake achievements then you will be banned for 7 days.\n 6. Your Team Must have played atleast a single tournament with 50k prizepool", color=0x66d9ff)
+        try:
+          await message.author.create_dm()
+          await message.author.dm_channel.send(embed =  embed)
+          await message.reply("**Read Rules be carefully in your DM **")
+        except:
+          await message.reply(f"I couldn't dm you! \nMake sure you dms are open.")
+
+      if "t1r" in x and message.channel.id == 857501729213120531:
+        embed=discord.Embed(title="**Tier 1 Requirement**", description="1. PMCO SEMI FINALIST & FINALISTS.\n 2. PMIT SEMIFINALIST & FINALISTS.\n 3. TOP 2 FOR 2 CONSECUTIVE MONTHS IN REAL ESPORTS T2\n 4. TOP 100 IN ANY TOURNAMENT HOSTED BY PUBG or BGMI Official.\n 5. ATLEAST ONE OF YOUR TEAM MEMBER OWNS A BGMI YOUTUBE CHANNEL WITH < 20k SUBS", color=0x66d9ff)
+        try:
+          await message.author.create_dm()
+          await message.author.dm_channel.send(embed =  embed)
+          await message.reply("**Read Requirements be carefully in your DM **")
+        except:
+          await message.reply(f"I couldn't dm you! \nMake sure you dms are open.")
+
+      if "t1waittime" in x or "t1wait" in x and message.channel.id == 857501729213120531:
+        
+        embedVar = discord.Embed(title="Tier 1 Normal Waiting time", description="**Real Esports** always welcome you in Tier 1 Normally waiting time is   **2 Day** but at present time **8 of teams are in Queue** so it may take at least **10 to 15 days.** When we reach to Your team we will contact you ourselves. You will get a **DM** on behalf of tier 1 the bot of Real Esports will be alert you in your dm \nOtherwise you can contact to [Admin](https://discord.com/channels/565508242843631616/842458727416332308/848775392331956244)", color=0x00ff00)
+        await message.channel.send(embed=embedVar)
+
         
 
 def setup(client):

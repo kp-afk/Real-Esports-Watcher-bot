@@ -5,6 +5,18 @@ import random
 import os
 import pymongo
 from pymongo import MongoClient
+import smtplib, ssl
+
+port = 465  # For starttls
+smtp_server = "smtp.gmail.com"
+sender_email = "realesports.in@gmail.com"
+
+password = os.getenv('gmail_pass')
+message = """\
+Subject: Hi there
+
+This message is sent from Python."""
+context = ssl.create_default_context()
 
 mongodb_credentials = os.getenv('mongodb')
 cluster = MongoClient(mongodb_credentials)
@@ -57,5 +69,17 @@ def randomemote():
               "<a:yhh:743698122362060810> " ]
   random_emote = random.choice(opemotes)
   return random_emote
+
+ 
+
+
+
+def mailer(recipient):
+  receiver_email = recipient
+
+  with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+    server.login(sender_email, password)
+    server.sendmail(sender_email, receiver_email, message)
+
 
   

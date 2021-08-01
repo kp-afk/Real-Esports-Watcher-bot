@@ -21,12 +21,19 @@ class admin(commands.Cog):
         member = str(member)
         member = ctx.guild.get_member_named(member)
       await ctx.reply(member.mention)
- 
-    @commands.command()
-    async def nobemail(self, ctx, arg1):
-      utils.mailer(arg1)
- 
 
+    @commands.command()
+    async def nub(self, ctx, m : discord.Member):
+      await ctx.reply(m.roles)
+
+      
+
+        
+
+          
+
+ 
+  
 
 
     @commands.command()

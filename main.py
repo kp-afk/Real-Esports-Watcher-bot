@@ -1,8 +1,12 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import os
 from keep_alive import keep_alive
 import variables
+import asyncio
+from cryptography.fernet import Fernet
+
+
 
 client = commands.Bot(command_prefix='>>',
                       case_insensitive=True,
@@ -18,13 +22,13 @@ async def on_ready():
                                 name="Tier 2"))
     print('Started')
 
-      
+
 client.load_extension('cmds.tier_2_watch')
-client.load_extension('cmds.tier_3_watch')
-client.load_extension('cmds.pmsl')
+#client.load_extension('cmds.tier_3_watch')
+#client.load_extension('cmds.pmsl')
 client.load_extension('cmds.other')
 client.load_extension('cmds.antiping')
-client.load_extension('cmds.admin')
+#client.load_extension('cmds.admin')
 
 keep_alive()
 client.run(bot_token)

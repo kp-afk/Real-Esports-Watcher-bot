@@ -190,6 +190,56 @@ class t2watch(commands.Cog):
         await asyncio.sleep(2)
         await ctx.send(f"Team {teamname} Removed From Tier-2. ")
 
+    @commands.command()
+    @commands.has_any_role(variables.botaccess1, variables.botaccess2,
+                           variables.botaccess3, variables.botaccess4)
+    async def t2ban(self, ctx, member : discord.Member):
+     
+      await ctx.send("Enter Team Name")
+      def check(teamnamemsg):
+        return teamnamemsg.author == ctx.message.author
+      teamnamemsg = await self.client.wait_for("message", check = check, timeout=60)
+      teamname = teamnamemsg.content
+      teamname = teamname.strip()
+      await ctx.send("Enter Reason For BAN")
+      def check(reason):
+        return reason.author == ctx.message.author
+      reason = await self.client.wait_for("message", check = check, timeout = 600)
+      reason = reason.content
+      reason = reason.strip()
+      await ctx.send("Enter Ban time")
+      def check(bantimemsg):
+        return bantimemsg.author == ctx.message.author
+      bantimemsg = await self.client.wait_for("message", check = check, timeout = 600)
+      bantime = bantimemsg.content
+      bantime = bantime.strip()
+      bebumsg = await ctx.send("Pls wait bebu <:z_white_heartt:793911862386360340> <:z_love4:789551205675827242>")
+      async with ctx.typing():
+        
+        embed=discord.Embed(title="**Real Esports Tier-2**", color=0xfa0000)
+        embed.add_field(name="Team BAN", value=f"Team {teamname} has been Banned from Tier-2.\n{member.mention}", inline=True)
+        embed.add_field(name="Reason For Ban:", value=f"{reason}", inline=False)
+        embed.add_field(name="Time", value=f"**{bantime}**", inline=False)
+        embed.set_footer(text="Copyright ©  2021 REAL Esports- All Rights Reserved.")
+        try:
+          await member.create_dm()
+          await member.dm_channel.send(embed=embed)
+        except:
+          await ctx.send(f"Couldn't dm {member.mention}.")
+        channel = ctx.guild.get_channel(variables.tier_2_logs_channel_id)
+        await channel.send(embed = embed)
+        await asyncio.sleep(2)
+        await ctx.send(f"Team {teamname} Banned From Tier-2. ")
+      try:
+        await bebumsg.delete()
+      except:
+        pass
+
+      
+      
+
+    
+
 
 def setup(client):
     client.add_cog(t2watch(client))

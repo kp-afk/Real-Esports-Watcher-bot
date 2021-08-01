@@ -6,17 +6,10 @@ import os
 import pymongo
 from pymongo import MongoClient
 import smtplib, ssl
+import datetime
+from datetime import datetime, timedelta
+import os
 
-port = 465  # For starttls
-smtp_server = "smtp.gmail.com"
-sender_email = "realesports.in@gmail.com"
-
-password = os.getenv('gmail_pass')
-message = """\
-Subject: Hi there
-
-This message is sent from Python."""
-context = ssl.create_default_context()
 
 mongodb_credentials = os.getenv('mongodb')
 cluster = MongoClient(mongodb_credentials)
@@ -70,16 +63,52 @@ def randomemote():
   random_emote = random.choice(opemotes)
   return random_emote
 
+def addnewuserinfraction(message):
+# ----------------------------------------
+  mongodb_credentials = os.getenv('mongodb')
+  cluster = MongoClient(mongodb_credentials)
+  db = cluster["Real_Esports_Bot"]
+  collection = db["watcher_bot_v2"]
+# ----------------------------------------
+  
+  
+  post = {
+                    "_id": message.author.id,
+                    "rajumentions": 1,
+                    "name": message.author.name,
+                    "time": datetime.now()
+        }
+  collection.insert_one(post)
+
+def adduserinfraction(message):
+# ----------------------------------------
+  mongodb_credentials = os.getenv('mongodb')
+  cluster = MongoClient(mongodb_credentials)
+  db = cluster["Real_Esports_Bot"]
+  collection = db["watcher_bot_v2"]
+# ----------------------------------------
+
+  query = {"_id": message.author.id}
+  user = collection.find(query)
+  for result in user:
+    score = result["rajumentions"]
+  score = score + 1
+  collection.update_one(
+                    {"_id": message.author.id},
+                    {"$set": {
+                        "rajumentions": score
+                    }},
+                )
+  collection.update_one(query,
+                                      {"$set": {
+                                          "time": datetime.now()
+                                      }})
+
  
 
 
 
-def mailer(recipient):
-  receiver_email = recipient
 
-  with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
 
 
   

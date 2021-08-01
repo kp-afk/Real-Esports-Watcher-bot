@@ -9,9 +9,9 @@ botaccess1 = 831739661386121256 #@❯❯❯───────FOUNDER OF REAL
 #id of role allowed to use commands
 botaccess2 = 847690517286092800 #@PMSL Management
 #id of role allowed to use commands
-botaccess3 = 841669677343703052
+botaccess3 = 831739661386121256
 #id of role allowed to use commands
-botaccess4 = 738216270129922118
+botaccess4 = 746822303584878672
 #Prime teams LOG CHANNEL
 primeteam = 827291055941746748
 #Membership ROLE
